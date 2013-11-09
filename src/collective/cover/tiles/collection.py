@@ -185,16 +185,26 @@ class CollectionTile(PersistentCoverTile):
         :param item: [required]
         :type item: content object
         """
-        if self._has_image_field(item) and self._field_is_visible('image'):
+        #if self._has_image_field(item) and self._field_is_visible('image'):
+        if True:
             tile_conf = self.get_tile_configuration()
             image_conf = tile_conf.get('image', None)
             if image_conf:
                 scaleconf = image_conf['imgsize']
                 # scale string is something like: 'mini 200:200'
                 scale = scaleconf.split(' ')[0]  # we need the name only: 'mini'
-                scales = item.restrictedTraverse('@@images')
-                return scales.scale('image', scale)
-
+                images = item.restrictedTraverse('@@images')
+                if images:
+                    try:
+                        if hasattr(item, 'lead_image'):
+                            return images.scale('lead_image', scale)
+                        elif hasattr(item, 'Schema'):
+	                    return images.scale('image', scale)
+                        else:
+                            return None
+                    except:
+                        return None
+              
     def remove_relation(self):
         data_mgr = ITileDataManager(self)
         old_data = data_mgr.get()

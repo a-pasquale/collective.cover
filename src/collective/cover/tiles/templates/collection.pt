@@ -19,12 +19,11 @@
         </a>
       </div>
 
-      <div tal:condition="not:results">
-        <p i18n:translate="">The collection doesn't have any results.</p>
-      </div>
-
       <div class="tile-header" tal:condition="view/show_header">
           <span tal:content="view/data/header" />
+      </div>
+      <div tal:condition="not:results">
+        <p i18n:translate="">The collection doesn't have any results.</p>
       </div>
 
 
@@ -37,7 +36,8 @@
                 <img tal:attributes="src thumbnail/url;
                                      width thumbnail/width;
                                      height thumbnail/height;
-                                     alt obj/Description|obj/Title" />
+                                     alt obj/Description|obj/Title"
+                     class="tileImage"/>
               </a>
             </tal:image>
 

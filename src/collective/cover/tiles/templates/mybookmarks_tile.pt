@@ -1,0 +1,59 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      i18n:domain="collective.cover">
+<body tal:define="bookmarks view/results;
+                  user context/@@plone_portal_state/member;">
+
+    <div class="tile-title">Personal bookmarks</div>
+    <!--
+	<tal:default_bookmarks
+		define="default_bookmarks view/default_bookmarks"
+		condition="default_bookmarks">
+		<dd class="portletItem"
+			tal:repeat="bookmark default_bookmarks">
+			<img tal:attributes="src string:${here/portal_url}/++resource++collective.portlet.mybookmarks.images/lock.gif"
+				 alt="default link"
+				 title="Default link"/>
+			<a tal:attributes="title bookmark/Title; href bookmark/url" tal:content="bookmark/Title" />
+		</dd>
+	</tal:default_bookmarks>
+    -->
+    <dl>
+	<tal:bookmarks repeat="bookmark bookmarks"
+                condition="bookmarks">
+      <dd>
+	    <form method="POST"
+	          action="" 
+	          tal:condition="python:user.has_permission('collective.portlet.mybookmarks: Remove User Bookmark', here)"
+			  tal:attributes="action string:${here/absolute_url}/confirm_delete_bookmark">
+	  		<input type="hidden" name="remove_bookmark" value=""
+				   tal:attributes="value bookmark/removeValue"/>
+			
+			<input type="hidden" name="bookmark_title" value=""
+                   tal:attributes="value bookmark/Title"/>
+			
+			<input type="hidden" name="bookmark_type" value=""
+				   tal:attributes="value bookmark/bookmark_type"/>
+			
+			<input type="hidden" name="delete_submitted" value="1"/>
+				   
+			<input class="removeBookmarkButton"
+	 	           type="image"
+		           alt=""
+		           name="Remove"
+				   i18n:attributes="name"
+				   tal:attributes="src string:${here/portal_url}/++resource++collective.portlet.mybookmarks.images/delete.png;
+				                   alt string:delete ${bookmark/Title}"
+		    />
+	    </form>
+
+	    <a tal:attributes="title bookmark/Description|bookmark/Title; href bookmark/url" tal:content="bookmark/Title" />
+	  </dd>
+	</tal:bookmarks>
+    <div tal:condition="not: bookmarks">You haven't bookmarked anything yet.  You can bookmark articles for easy access.</div>
+
+</dl>
+</body>
+</html>

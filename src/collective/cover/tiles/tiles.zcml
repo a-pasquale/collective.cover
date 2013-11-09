@@ -126,4 +126,16 @@
       for="*"
       />
 
+  <plone:tile
+      name="collective.cover.mybookmarks"
+      title="My Bookmarks Tile"
+      description="A bookmarks tile."
+      icon="++resource++collective.cover/tile-contentbody.png"
+      add_permission="cmf.ModifyPortalContent"
+      schema=".mybookmarksTile.IMyBookmarksTile"
+      class=".mybookmarksTile.myBookmarksTile"
+      permission="zope2.View"
+      for="*"
+      />
+
 </configure>
